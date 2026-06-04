@@ -1,0 +1,42 @@
+# Textbook PDF (copyright)
+IoT_Fundamentals.pdf
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Chroma vector store (generated at runtime)
+chroma/
+chroma_db/
+*.chroma
+
+# Jupyter / Colab notebooks (if any)
+*.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and temp outputs
+*.log
+*.tmp
