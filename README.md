@@ -43,6 +43,8 @@ Note: the textbook itself is commercially published and isn't redistributed in t
 
 Everything in the pipeline was held constant except the chunking strategy itself, that's the entire point of a controlled comparison. Same embedding model, same generative model, same vector database, same 10-question test set per strategy (40 questions total). The only variable that moved was how text got split.
 
+- **Execution Environemnt:** Google Colab (cloud-hosted VM). All four pipelines ran on the same Colab session to keep hardware conditions consistent across strategies. Ollama was used to serve Llama 3.1 (8B) directly inside the Colab runtime, so there were still no external commercial API calls involved.
+Generative model: Llama 3.1 (8B), served via Ollama. No external API calls, no commercial LLM dependency.
 - **Generative model:** Llama 3.1 (8B), run locally via Ollama. No external API calls, no commercial LLM dependency.
 - **Evaluation framework:** RAGAS, across Faithfulness, Answer Relevance, Context Precision, and Context Recall.
 - **Chunking library:** LangChain.
