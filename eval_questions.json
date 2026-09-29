@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What does IoT stand for?",
+    "reference": "IoT stands for Internet of Things, which refers to the network of physical objects embedded with sensors, software, and connectivity that enable them to collect and exchange data over a network."
+  },
+  {
+    "question": "What is the primary function of sensors and actuators in an IoT system?",
+    "reference": "Sensors and actuators form the 'things' layer of an IoT system. Their primary function is generating data and being capable of being queried and/or controlled over a network. Sensors collect data from the environment while actuators perform physical actions based on commands received."
+  },
+  {
+    "question": "What is the role of a gateway in an IoT network?",
+    "reference": "A gateway in an IoT network organizes multiple smart objects in a given area and communicates directly with them. Its role is to forward collected information through a longer-range medium called the backhaul to a headend central station where the information is processed. On IP networks, the gateway also forwards packets from one IP network to another, acting as a router."
+  },
+  {
+    "question": "What are the three layers of the Core IoT Functional Stack presented in the book?",
+    "reference": "The Core IoT Functional Stack presented in the book consists of three layers: the Things layer (sensors and actuators), the Communications Network layer (which handles data transmission and includes sublayers such as access network, gateways and backhaul, network transport, and IoT network management), and the Application and Analytics layer (which processes collected data to control smart objects and make intelligent decisions)."
+  },
+  {
+    "question": "What are the four types of data analysis results described in the context of IoT analytics?",
+    "reference": "The four types of data analysis results described are: Descriptive analysis, which tells you what is happening now or in the past; Diagnostic analysis, which explains why something happened; Predictive analysis, which aims to foretell problems before they occur using historical data; and Prescriptive analysis, which goes beyond predictive by recommending solutions for upcoming problems. Descriptive is the least complex but offers the least value, while prescriptive is the most complex but provides the highest value."
+  },
+  {
+    "question": "What are the three Quality of Service levels defined in the MQTT protocol and what does each guarantee?",
+    "reference": "MQTT defines three QoS levels: QoS 0 is a best-effort unacknowledged service known as 'at most once' delivery, where the message arrives once or not at all with no retry. QoS 1 ensures 'at least once' delivery by using PUBLISH and PUBACK packet identifiers and retransmitting if no acknowledgement is received. QoS 2 is the highest level providing 'exactly once' delivery using a two-step acknowledgement process with PUBLISH/PUBREC and PUBREL/PUBCOMP packet pairs, ensuring neither loss nor duplication of messages."
+  },
+  {
+    "question": "How does the IoT Reference Model define the separation between IT and OT responsibilities, and why does IoT challenge this traditional boundary?",
+    "reference": "In the IoT Reference Model, the bottom layers of the stack fall under Operational Technology (OT) responsibility, covering sensors, devices, and physical systems such as pipelines and machinery. The top layers fall under Information Technology (IT) responsibility, covering servers, databases, and applications. Traditionally, OT and IT operated independently with little need to interact. IoT challenges this boundary because devices at the OT layer generate real-time data continuously that must be processed by IT applications at the top, requiring both organizations to collaborate on overall data management, including converting real-time 'data in motion' at the edge into 'data at rest' for IT-tier applications."
+  },
+  {
+    "question": "What are the key differences between structured and unstructured data in IoT, and why does unstructured data present greater analytical challenges?",
+    "reference": "Structured data follows a defined model or schema that fits well with traditional relational database management systems and includes data like temperature, pressure, and humidity values sent in known formats. It is easily formatted, stored, queried, and processed. Unstructured data lacks a logical schema for decoding through traditional programming means and includes text, speech, images, and video. Approximately 80% of a business's data is unstructured. Unstructured data presents greater analytical challenges because it cannot be processed with standard relational database tools and typically requires advanced techniques such as cognitive computing, machine learning, natural language processing, and image recognition to extract meaningful insights."
+  },
+  {
+    "question": "How do the smart object classification parameters such as mobility, reporting frequency, data richness, and report range interact with each other to constrain IoT network design decisions?",
+    "reference": "The classification parameters of IoT smart objects are deeply interdependent. A highly mobile object typically has a small form factor, which limits its antenna size and power source, thereby constraining its transmission range and available network protocols. Battery-powered objects have limited energy budgets, so higher reporting frequency or richer data both increase power consumption, potentially forcing tradeoffs between mobility and transmission range. Report range determines which access technology is viable since technologies like ZigBee are efficient only over short distances while cellular supports longer ranges. Object density per cell affects the chosen topology and gateway design. These interdependencies mean that a designer must evaluate all parameters together rather than independently, as optimizing one often constrains another, for example a high-frequency sensor sending rich data over a long range would likely require a constant power source, eliminating mobility."
+  },
+  {
+    "question": "Considering the IoT Data Management and Compute Stack alongside the Core IoT Functional Stack, explain how the principle of processing data as close to the edge as possible addresses both the data volume challenge and real-time responsiveness requirements in large-scale IoT deployments.",
+    "reference": "The IoT Data Management and Compute Stack aligns three data management tiers with the Core IoT Functional Stack: the edge layer handles data management within sensors themselves, the fog layer handles data management in gateways and the transit network, and the cloud layer handles data management in the cloud or central data center. Processing data as close to the edge as possible addresses data volume by filtering, aggregating, and reducing data flows at Layer 3 before they traverse the backhaul network, preventing the massive volume of raw sensor data from overwhelming higher-layer systems and network bandwidth. For real-time responsiveness, edge and fog processing allows predefined thresholds to be evaluated locally so that immediate actions or alerts can be triggered without the latency of a round-trip to the cloud. This tiered approach transforms real-time 'data in motion' at the edge into organized 'data at rest' for IT-tier applications, allowing each layer to process data at its own speed while ensuring time-sensitive decisions are handled locally. Large-scale deployments such as aviation, where engines generate 10GB of data per second, make this architectural principle essential rather than optional."
+  }
+]
