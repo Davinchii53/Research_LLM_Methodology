@@ -1,4 +1,4 @@
-# Comparative Study of Text Chunking Strategies for RAG-Based Question Answering in IoT Textbooks
+# Comparative Study of Text Chunking Strategies for RAG-Based Question Answering on an IoT Textbook
 
 A controlled experiment comparing four text chunking strategies, Fixed-size, Semantic, Hierarchical, and Hybrid, inside a single RAG pipeline built on Llama 3.1 (8B). Evaluated with the RAGAS framework across Faithfulness, Answer Relevance, Context Precision, and Context Recall.
 
@@ -27,9 +27,9 @@ These strategies have been compared before, and recent work is mixed on whether 
 
 ### Research Questions
 
-1. Do different chunking strategies produce measurable performance differences in RAG-based QA on an IoT textbook?
-2. Which strategy, Fixed-size, Semantic, Hierarchical, or Hybrid, achieves the highest overall RAGAS score?
-3. How does each strategy perform across the four individual RAGAS dimensions?
+1. Do the four chunking configurations produce measurable differences in RAGAS-scored question answering performance on an IoT textbook?
+2. Which configuration — Fixed-size, Semantic, Hierarchical, or Hybrid — records the highest mean RAGAS scores on this dataset?
+3. How does each configuration perform on the four RAGAS dimensions individually: Faithfulness, Answer Relevance, Context Precision, and Context Recall?
 
 ## Dataset
 
@@ -77,21 +77,34 @@ Hybrid recorded the highest mean on every metric. Context Precision came out at 
 
 These are means over 10 questions with one run per strategy. No significance test was applied, so treat every gap below as descriptive rather than established.
 
-### Why Fixed-size lost
+### Fixed-size: lowest on every metric
 
 512-character cuts with no structural awareness routinely split a thought in half, leaving neither half independently retrievable for a relevant query. At roughly 90-130 tokens a chunk, there often isn't room for a complete protocol explanation in the first place. Context Recall reflects that gap directly: 0.7800 against 0.9050 for Hierarchical and 0.9000 for Semantic isn't a small difference.
 
-### Why Semantic and Hierarchical each won on different things
+### Semantic and Hierarchical: different profiles
 
-Semantic's 0.9667 Context Precision was the strongest of the two non-hybrid approaches. Boundary detection at 0.85 similarity tends to keep chunks on a single topic, which cuts down retrieval noise almost by definition.
+Semantic's 0.9667 Context Precision was the higher of the two intermediate approaches. That is consistent with boundary detection at 0.85 similarity keeping chunks on a single topic and so reducing retrieval noise.
 
-Hierarchical's 0.9050 Context Recall came from a more structural decision. Even when the triggering child chunk was narrow, the 1024-character parent chunk it pulled in covered enough surrounding material to actually answer the question.
+Hierarchical's 0.9050 Context Recall was the higher of the two on recall. That is consistent with its structure: even when the triggering child chunk was narrow, the 1024-character parent chunk it pulled in often covered enough surrounding material to answer the question.
 
-### Why Hybrid won everything
+Their 0.0048 gap on Faithfulness (0.7006 vs 0.6958) is too small to order them.
 
-It gets the noise suppression that Semantic chunking provides at the child-chunk level, which is what pushed Context Precision to a perfect score, and it gets the wide context window from parent chunks at generation time, which is what pushed Context Recall past both standalone strategies. Faithfulness (0.7970) and Answer Relevance (0.7848) followed the same pattern: cleaner, less noisy context arriving at the model produced fewer unsupported claims and answers that actually addressed the question asked.
+### Hybrid: highest on every metric
 
-On Faithfulness specifically, the pattern across all four strategies says something about how Llama 3.1 behaves under incomplete context. When retrieved context is fragmented, the model doesn't flag the gap, it just fills it from parametric memory, and that's where unsupported claims sneak in. Fixed-size's 0.5717 Faithfulness score is less a model failure and more a symptom of what it was being fed.
+Hybrid's two levels address the two retrieval metrics separately: semantic child boundaries limit off-topic matches, and parent expansion supplies width at generation time. That is consistent with it recording the highest Context Precision (1.0000) and Context Recall (0.9290). It also recorded the highest Faithfulness (0.7970) and Answer Relevance (0.7848).
+
+The most informative comparison is Hybrid against Semantic, because both build their retrieval units with the same chunker at the same 0.15 threshold. Whatever separates them is therefore about parent expansion, not about where boundaries fall:
+
+| Hybrid − Semantic | Gap |
+|---|---|
+| Faithfulness | +0.0964 |
+| Answer Relevance | +0.1452 |
+| Context Precision | +0.0333 |
+| Context Recall | +0.0290 |
+
+The generation metrics separate several times more than the retrieval metrics, which is consistent with the parent chunk doing its work at generation time, where it stands in for the child. The segmentation is comparable rather than identical (Semantic chunks whole pages, Hybrid chunks within each parent), and the substitution also gives the model more context, so this is one comparison on 10 questions, not a controlled isolation.
+
+Across all four strategies, the ordering of Faithfulness and Answer Relevance follows the ordering of retrieval quality. When retrieved context is fragmented, the model doesn't flag the gap; it fills it from parametric memory, and that's where unsupported claims enter. Fixed-size's 0.5717 Faithfulness is better explained by what it was being fed than by the model itself. This relationship was not tested statistically, so it is an observed ordering across four configurations, not a measured correlation.
 
 ## Conclusion
 
@@ -141,7 +154,7 @@ The source textbook is commercially published by Cisco Press and is not redistri
 
 ## Acknowledgments
 
-Thanks to Pak Johan Muliadi Kerta for review and feedback throughout this research. AI-assisted tools used during the research process include Claude as a coding assistant and Google Gemini for research finding support.
+Thanks to Pak Johan Muliadi Kerta for review and feedback throughout this research. AI-assisted tools were used in this work: Claude as a coding assistant during implementation and for language editing and structural revision of the manuscript, and Google Gemini to support literature search. All experimental design, execution, results, and interpretation are the authors' own.
 
 ## Citation
 
